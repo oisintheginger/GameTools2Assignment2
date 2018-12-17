@@ -120,7 +120,6 @@ public class playerMove : MonoBehaviour {
             anim.SetTrigger("PlayerRoll");
         }
 
-        //open door
         
     }
 
@@ -211,6 +210,16 @@ public class playerMove : MonoBehaviour {
         if(other.gameObject.tag=="Door"&& Input.GetKeyDown(KeyCode.E))
         {
             anim.SetTrigger("PlayerOpen");
+            if (other.gameObject.GetComponent<Animator>().GetBool("isOpened") == false)
+            {
+                other.gameObject.GetComponent<Animator>().SetTrigger("Open");
+                other.gameObject.GetComponent<Animator>().SetBool("isOpened", true);
+            }
+            else if(other.gameObject.GetComponent<Animator>().GetBool("isOpen") == true)
+            {
+                other.gameObject.GetComponent<Animator>().SetTrigger("Close");
+                other.gameObject.GetComponent<Animator>().SetBool("isOpened", false);
+            }
         }
     }
     private void OnTriggerExit(Collider other)
