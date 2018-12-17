@@ -80,7 +80,7 @@ public class playerMove : MonoBehaviour {
 
 
         //running
-        if (Input.GetKey(KeyCode.W)&& anim.GetBool("PlayerDead") == false)
+        if (Input.GetKey(KeyCode.W)&& anim.GetBool("PlayerDead") == false && anim.GetBool("PlayerClimb") == false)
         {
             if (gc.Grounded == false)
             {
@@ -90,7 +90,7 @@ public class playerMove : MonoBehaviour {
             }
             
         }
-        if (Input.GetKey(KeyCode.S) && gc.Grounded == false&& anim.GetBool("PlayerDead") == false)
+        if (Input.GetKey(KeyCode.S) && gc.Grounded == false&& anim.GetBool("PlayerDead") == false && anim.GetBool("PlayerClimb")==false)
         {
             forwardForce *= -1;
             playerRB.AddForce(forwardForce);
@@ -113,6 +113,15 @@ public class playerMove : MonoBehaviour {
         {
             anim.SetBool("isBlocking", false);
         }
+
+        //rolling
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            anim.SetTrigger("PlayerRoll");
+        }
+
+        //open door
+        
     }
 
     //stepsound
@@ -182,5 +191,33 @@ public class playerMove : MonoBehaviour {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
 
+    }
+
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.tag =="Ladder"&& Input.GetKey(KeyCode.E))
+        {
+            anim.SetBool("PlayerClimb", true);
+        }
+       
+        if(other.gameObject.name=="LadderTop")
+        {
+            anim.SetBool("PlayerClimb", false);
+            anim.SetTrigger("FinishClimb");
+        }
+
+        if(other.gameObject.tag=="Door"&& Input.GetKeyDown(KeyCode.E))
+        {
+            anim.SetTrigger("PlayerOpen");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag=="Ladder")
+        {
+            anim.SetBool("PlayerClimb", false);
+        }
     }
 }

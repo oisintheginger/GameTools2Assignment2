@@ -28,6 +28,7 @@ public class spellBall : MonoBehaviour {
             if (other.gameObject.GetComponent<Animator>().GetBool("isBlocking") == false)
             {
                 other.gameObject.GetComponent<playerMove>().playerHealth -= 1;
+                other.gameObject.GetComponent<Animator>().SetTrigger("PlayerHurt");
             }
 
             if (other.gameObject.GetComponent<playerMove>().playerHealth == 0 )

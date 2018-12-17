@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class demon : MonoBehaviour {
+
+    //Nav Mesh stuff
+    [SerializeField]
+    Transform destination;
+    NavMeshAgent navMesh;
 
     public Transform player;
     public GameObject projectileObj;
@@ -26,11 +33,26 @@ public class demon : MonoBehaviour {
 
     private void Start()
     {
+        navMesh = this.GetComponent<NavMeshAgent>();
+
+        SetDestination();
+
         animD = GetComponent<Animator>();
         demonRB = GetComponent<Rigidbody>();
         audioD = GetComponent<AudioSource>();
+
+        
     }
-    
+
+    private void SetDestination()
+    {
+        if(destination != null)
+        {
+            Vector3 targetVector = destination.transform.position;
+            navMesh.SetDestination(targetVector);
+        }
+    }
+
 
 
     // Update is called once per frame
@@ -71,6 +93,7 @@ public class demon : MonoBehaviour {
 
         
     }
+
 
 
     //public void to be accessed by the animation event to instantiate projectile prefab
