@@ -13,19 +13,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: DemonAttack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: DemonDead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -279,7 +279,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: attackDemon
-  m_Speed: 2
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101325295529394342}
@@ -329,7 +329,7 @@ AnimatorStateMachine:
     m_Position: {x: 300, y: 48, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102925179622686706}
-    m_Position: {x: 569.5313, y: -3.3398438, z: 0}
+    m_Position: {x: 564, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102780808943181346}
     m_Position: {x: 493.4571, y: 221.17189, z: 0}

@@ -2409,11 +2409,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76b963500c7ed049ad69e827d7bbdfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: 9
+  startHealth: 0
+  startMagic: 0
+  magicRegen: 0
+  healthBar: {fileID: 0}
+  magicBar: {fileID: 0}
+  spellball: {fileID: 0}
+  spellTransform: {fileID: 0}
   stepSound: {fileID: 8300000, guid: ef4ed2abd99951d469765da8dfbb6c03, type: 3}
   swingSound: {fileID: 8300000, guid: b642c3477071d1b4c8411fb81df2c5a2, type: 3}
   jumpSound: {fileID: 8300000, guid: 4fbc9b6b6625bd942a3a84139d763ff6, type: 3}
   landSound: {fileID: 8300000, guid: ed46596ce012c6d4e8035f975f4e6e75, type: 3}
-  playerHealth: 9
   JumpForce: {x: 0, y: 2300, z: 0}
   forwardForce: {x: 0, y: 0, z: 0}
   strength: 1500

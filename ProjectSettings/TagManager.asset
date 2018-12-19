@@ -8,6 +8,8 @@ TagManager:
   - projectile
   - Ladder
   - Door
+  - wall
+  - end
   layers:
   - Default
   - TransparentFX

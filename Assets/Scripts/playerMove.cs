@@ -1,11 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class playerMove : MonoBehaviour {
 
     Rigidbody playerRB;
     Animator anim;
+
+    //HealthBar Stuff
+    public float playerHealth;
+    [SerializeField] float startHealth, healthRegen;
+    [SerializeField] float startMagic, magicRegen;
+    private float playerMagic;
+    [Header("HealthBar")]
+    public Image healthBar;
+
+    [Header("MagicBar")]
+    public Image magicBar;
+
+
+    //Magic Spell Stuff
+    [SerializeField] GameObject spellball;
+    [SerializeField] Transform spellTransform;
 
     //Sound stuff
     [SerializeField] AudioClip stepSound, swingSound,jumpSound, landSound;
@@ -13,7 +31,7 @@ public class playerMove : MonoBehaviour {
     AudioSource playerSound;
 
    
-    public int playerHealth;
+    
 
     [SerializeField]
     Vector3 JumpForce, forwardForce;
@@ -32,6 +50,8 @@ public class playerMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        playerMagic = startMagic;
+        playerHealth = startHealth;
         //accessing componenets
         playerRB = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
@@ -40,8 +60,17 @@ public class playerMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        
 
+        magicBar.fillAmount = playerMagic / startMagic;
+        healthBar.fillAmount = playerHealth / startHealth;
+        if (playerMagic<startMagic)
+        {
+            playerMagic += magicRegen;
+        }
+        if(playerHealth<startHealth)
+        {
+            playerHealth += healthRegen;
+        }
         forwardForce = strength * transform.forward;
         //setting the floats in the blend tree to react to player input
         anim.SetFloat("VertSpeed", playerRB.velocity.y);
@@ -63,11 +92,8 @@ public class playerMove : MonoBehaviour {
             if(Input.GetMouseButtonDown(0)&&hitter.collider.gameObject.tag=="Enemy")
             {
                 Debug.Log("Did Hit");
-                hitter.collider.GetComponent<demon>().DemonHealth -=1;
-                if (hitter.collider.GetComponent<demon>().DemonHealth == 0)
-                {
-                    hitter.collider.gameObject.GetComponent<Animator>().SetBool("DemonDead", true);
-                }
+                hitter.collider.GetComponent<demon>().demonDamage(1);
+                
             }
             
         }
@@ -78,6 +104,10 @@ public class playerMove : MonoBehaviour {
         }
 
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("StartMenu");
+        }
 
         //running
         if (Input.GetKey(KeyCode.W)&& anim.GetBool("PlayerDead") == false && anim.GetBool("PlayerClimb") == false)
@@ -119,7 +149,11 @@ public class playerMove : MonoBehaviour {
         {
             anim.SetTrigger("PlayerRoll");
         }
-
+        //spell cast
+        if (Input.GetKeyDown(KeyCode.Q) && anim.GetBool("isBlocking") == false && playerMagic>1)
+        {
+            castingSpell();
+        }
         
     }
 
@@ -136,6 +170,10 @@ public class playerMove : MonoBehaviour {
         playerSound.PlayOneShot(stepSound);
     }
 
+    public void deadSceneLoad()
+    {
+        SceneManager.LoadScene("Level");
+    }
     
 
     //swingsound
@@ -174,7 +212,12 @@ public class playerMove : MonoBehaviour {
         playerSound.PlayOneShot(landSound);
     }
 
-
+    private void castingSpell()
+    {
+        playerMagic -= 1;
+        //magicBar.fillAmount = playerMagic / startMagic;
+        anim.SetTrigger("Cast");
+    }
 
 
     //using a timer rather than an animation event just to show I could do it using an IEnumerator
@@ -222,11 +265,39 @@ public class playerMove : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag =="end")
+        {
+            SceneManager.LoadScene("StartMenu");
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag=="Ladder")
         {
             anim.SetBool("PlayerClimb", false);
         }
+    }
+
+    public void playertakeDamage()
+    {
+        playerHealth -= 1;
+        //healthBar.fillAmount = playerHealth / startHealth; 
+    }
+
+    public void Playerprojectile()
+    {
+        
+
+            Instantiate(spellball, spellTransform.position, spellTransform.rotation);
+            /*audioD.volume = 0.2f;
+            audioD.pitch = 1f;
+            audioD.PlayOneShot(fireball);
+            */
+        
+
+
     }
 }

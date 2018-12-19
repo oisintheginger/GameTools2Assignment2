@@ -103,7 +103,7 @@ MonoBehaviour:
         intensity: 46.21
         threshold: 1.1
         softKnee: 0.5
-        radius: 4
+        radius: 3.9
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
@@ -305,10 +305,10 @@ MonoBehaviour:
       lut: {fileID: 0}
       contribution: 1
   chromaticAberration:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.1
+      intensity: 0
   grain:
     m_Enabled: 1
     m_Settings:
@@ -322,7 +322,7 @@ MonoBehaviour:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.63
+      intensity: 0.4
       smoothness: 0.2
       roundness: 1
       mask: {fileID: 0}

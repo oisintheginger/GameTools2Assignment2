@@ -2,18 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
+
 
 public class demon : MonoBehaviour {
+    //demon health bar stuff
+    [Header("Demon Healthbar")]
+    public Image DemonHealthBar;
 
     //Nav Mesh stuff
-    [SerializeField]
-    Transform destination;
-    NavMeshAgent navMesh;
+   
 
     public Transform player;
     public GameObject projectileObj;
-    public int DemonHealth;
+    private float DemonHealth;
+    [SerializeField] int demonStartHealth;
     
 
     [SerializeField]
@@ -33,9 +36,8 @@ public class demon : MonoBehaviour {
 
     private void Start()
     {
-        navMesh = this.GetComponent<NavMeshAgent>();
+        DemonHealth = demonStartHealth;
 
-        SetDestination();
 
         animD = GetComponent<Animator>();
         demonRB = GetComponent<Rigidbody>();
@@ -44,14 +46,7 @@ public class demon : MonoBehaviour {
         
     }
 
-    private void SetDestination()
-    {
-        if(destination != null)
-        {
-            Vector3 targetVector = destination.transform.position;
-            navMesh.SetDestination(targetVector);
-        }
-    }
+
 
 
 
@@ -113,7 +108,16 @@ public class demon : MonoBehaviour {
 
 
 
-
+    public void demonDamage(int damagetaken)
+    {
+        DemonHealth -= damagetaken;
+        DemonHealthBar.fillAmount = DemonHealth / demonStartHealth;
+        if (DemonHealth == 0)
+        {
+            animD.SetBool("DemonDead", true);
+        }
+       
+    }
 
 
 
